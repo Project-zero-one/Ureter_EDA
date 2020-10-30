@@ -30,18 +30,33 @@ def plot_rgbhist(csv_dice_file, save_path):
             hist_b = cv2.calcHist([blue], [0], None, [256], [1, 256])
             hist_g = cv2.calcHist([green], [0], None, [256], [1, 256])
             hist_r = cv2.calcHist([red], [0], None, [256], [1, 256])
-            # mean_b = np.mean(blue).item()
-            # mean_g = np.mean(green).item()
-            # mean_r = np.mean(red).item()
+
+            mean_b = np.mean(blue).item()
+            mean_g = np.mean(green).item()
+            mean_r = np.mean(red).item()
+
+            med_b = np.median(blue).item()
+            med_g = np.median(green).item()
+            med_r = np.median(red).item()
+
+            mode_b, count_b = stats.mode(blue, axis=None)
+            mode_g, count_g = stats.mode(green, axis=None)
+            mode_r, count_r = stats.mode(red, axis=None)
+
             std_b = np.std(blue).item()
             std_g = np.std(green).item()
             std_r = np.std(red).item()
-            print(std_b)
-            med_b = np.median(blue).item()
-            print(med_b)
-            mode, count = stats.mode(blue, axis=None)
-            print(mode)
-            print(count)
+
+            data_list = [
+                [mean_b], [med_b], [mode_b], [std_b], [count_b],
+                [mean_g], [med_g], [mode_g], [std_g], [count_g],
+                [mean_r], [med_r], [mode_r], [std_r], [count_r]
+            ]
+            with open('/mnt/cloudy_z/src/yhamajima/Ureter_EDA/processed_data/csv_output_test/test.csv', 'w', newline="") as file:
+                w = csv.writer(file, delimiter=",")
+                for data in data_list:
+                    w.writerows([data])
+
             # plt.plot(hist_r, color='r', label="r")
             # plt.plot(hist_g, color='g', label="g")
             # plt.plot(hist_b, color='b', label="b")
@@ -150,3 +165,10 @@ if __name__ == '__main__':
     #     "/mnt/cloudy_z/src/yhamajima/Ureter_EDA/processed_data/",
     #     "/mnt/cloudy_z/src/yhamajima/Ureter_EDA/processed_data/csv_output_test/"
     # )
+
+
+# # Cut off black mask of left and right edge
+#     if "cut_black" in augmentation_dict and augmentation_dict["cut_black"] is True:
+#         width = input_image.shape[1]
+#         input_image = input_image[:, int(width * 0.05):int(width * 0.95), :]
+#         label = label[:, int(width * 0.05):int(width * 0.95)]

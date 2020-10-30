@@ -78,5 +78,5 @@ def separate_along_dice(file_path,):
 if __name__ == '__main__':
     # convert_csv('/mnt/cloudy_z/src/yhamajima/eda_data/inf_result.csv')
     separate_along_dice(
-        '/mnt/cloudy_z/src/yhamajima/Ureter_EDA/preprocess/test_dice.csv'
+        '/mnt/cloudy_z/src/yhamajima/Ureter_EDA/preprocess/test_dice_re.csv'
     )
